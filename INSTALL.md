@@ -48,3 +48,20 @@ cp .env.example .env
 	],
 ```
 ### [http://localhost:8000/](url)
+
+
+#### Permisions 
+
+filesystems.php
+
+```
+'local' => [
+	'driver' => 'local',
+	'root' => storage_path('app'), // before
+	// 'root' => public_path('images/'),
+],
+
+chmod a+rwx storage 
+```
+
+more in Permisions.md
