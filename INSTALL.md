@@ -1,3 +1,11 @@
+### Info
+
+```
+Laravel Installer 2.2.0
+Laravel Framework 5.4.36
+```
+
+
 ### git clone
 
 
@@ -15,7 +23,7 @@ cp .env.example .env
 
 
 ### config/database.php
-
+```
 	'mysql' => [
 		'driver' => 'mysql',
 		'host' => env('DB_HOST', '127.0.0.1'),
@@ -38,5 +46,5 @@ cp .env.example .env
 			'NO_ENGINE_SUBSTITUTION',
 		],
 	],
-
+```
 ### [http://localhost:8000/](url)
