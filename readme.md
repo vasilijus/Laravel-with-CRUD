@@ -13,6 +13,14 @@ Free to download and change however you like
 
 ## Screenshots
 
+<a href="https://github.com/vasilijus/Laravel-with-CRUD/blob/master/Screenshots%20-%20may%20be%20deleted/blog_img_3.png" alt="Total Downloads">
+<img width="300px" src="https://github.com/vasilijus/Laravel-with-CRUD/blob/master/Screenshots%20-%20may%20be%20deleted/blog_img_3.png?raw=true"></a>
+<a href="https://github.com/vasilijus/Laravel-with-CRUD/blob/master/Screenshots%20-%20may%20be%20deleted/blog_img_2.png" alt="Total Downloads">
+<img width="300px" src="https://github.com/vasilijus/Laravel-with-CRUD/blob/master/Screenshots%20-%20may%20be%20deleted/blog_img_2.png?raw=true"></a>
+<a href="https://github.com/vasilijus/Laravel-with-CRUD/blob/master/Screenshots%20-%20may%20be%20deleted/blog_img_1.png" alt="Total Downloads">
+<img width="300px" src="https://github.com/vasilijus/Laravel-with-CRUD/blob/master/Screenshots%20-%20may%20be%20deleted/blog_img_1.png?raw=true"></a>
+
+
 
 
 
