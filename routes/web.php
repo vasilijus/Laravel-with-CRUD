@@ -13,8 +13,8 @@
 
 
 Route::get('/', 'PagesController@index');
-Route::get('/about', 'PagesController@about');
-Route::get('/services', 'PagesController@services');
+Route::get('/about', 'PagesController@about')->name('about');
+Route::get('/services', 'PagesController@services')->name('services');
 
 Route::resource('posts', 'PostsController');
 
