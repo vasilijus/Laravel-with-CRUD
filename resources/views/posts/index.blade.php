@@ -16,7 +16,7 @@
                         </div>
                     </div>
                     
-                    
+                    {{ $post }}
                 </div>
             @endforeach
         @else

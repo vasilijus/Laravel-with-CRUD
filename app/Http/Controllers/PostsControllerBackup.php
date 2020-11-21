@@ -53,13 +53,24 @@ class PostsController extends Controller
         // Handle File Upload
         if($request->hasFile('cover_image')){
 
+            //  To be changed 
+            
+            // // Get filename with the extension
+            // $filenameWithExt = $request->file('cover_image')->getClientOriginalName();
+            // // Get just filename
+            // $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+            // // Get just ext
+            // $extension = $request->file('cover_image')->getClientOriginalExtension();
+            // // Filename to store
+            // $fileNameToStore= $filename.'_'.time().'.'.$extension;
+            // // Upload Image
+            // $path = $request->file('cover_image')->storeAs('public/cover_images', $fileNameToStore);
+
             $cover_image = $request->file('cover_image');
             $filename = 'production' . '-' . time() . '.' . $cover_image->getClientOriginalExtension();
-            // $location = public_path('images/');
-
+            $location = public_path('images/');
             // $request->file('cover_image')->move($location, $filename);
-            // $request->file('cover_image')->move('storage/cover_images/', $filename);
-            $path = $request->file('cover_image')->store('post_img');
+            $request->file('cover_image')->move('storage/cover_images/', $filename);
 
 
         } else {
@@ -71,7 +82,7 @@ class PostsController extends Controller
         $post->title = $request->input('title');
         $post->body = $request->input('body');
         $post->user_id = auth()->user()->id;
-        $post->cover_image = $path.$filename;
+        $post->cover_image = $filename;
         $post->save();
 
         return redirect('/posts')->with('success', 'Post Created.');
