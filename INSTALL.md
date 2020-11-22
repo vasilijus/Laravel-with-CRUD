@@ -21,6 +21,8 @@ cp .env.example .env
 
 ### php artisan key:generate
 
+### php artisan migrate
+
 
 ### config/database.php
 ```
@@ -47,6 +49,13 @@ cp .env.example .env
 		],
 	],
 ```
+### Storage ( must )
+```
+ ln -s 
+ /path/Laravel-with-CRUD/storage/app/public 
+ /path/Laravel-with-CRUD/public 
+```
+
 ### [http://localhost:8000/](url)
 
 

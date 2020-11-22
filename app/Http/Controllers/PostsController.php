@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Post;
 
+use Carbon\Carbon; // To make the folder convention
+use Illuminate\Support\Facades\Hash; // To hide the user ID num
+
 class PostsController extends Controller
 {
     public function __construct()
@@ -44,6 +47,10 @@ class PostsController extends Controller
     public function store(Request $request)
     {
         //
+        $auth_user = auth()->user();
+        $auth_user_id = $auth_user->id;
+        $time = Carbon::now();
+
         $this->validate($request, [
             'title' => 'required',
             'body' => 'required',
@@ -55,11 +62,15 @@ class PostsController extends Controller
 
             $cover_image = $request->file('cover_image');
             $filename = 'production' . '-' . time() . '.' . $cover_image->getClientOriginalExtension();
-            // $location = public_path('images/');
 
-            // $request->file('cover_image')->move($location, $filename);
-            // $request->file('cover_image')->move('storage/cover_images/', $filename);
-            $path = $request->file('cover_image')->store('post_img');
+            $path = $request->file('cover_image')
+                ->storeAs(
+                    'public/'
+                    // . Hash::make($auth_user->id).'/'            // User Folder Dir
+                    . $auth_user->id .'/'            // User Folder Dir
+                    . $time->format('Y/m')                    // Folder Date
+                    , $filename                                 // New Name
+                );
 
 
         } else {
@@ -70,8 +81,8 @@ class PostsController extends Controller
         $post = new Post;
         $post->title = $request->input('title');
         $post->body = $request->input('body');
-        $post->user_id = auth()->user()->id;
-        $post->cover_image = $path.$filename;
+        $post->user_id = $auth_user_id;
+        $post->cover_image = $path;
         $post->save();
 
         return redirect('/posts')->with('success', 'Post Created.');
@@ -117,6 +128,10 @@ class PostsController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $auth_user = auth()->user();
+        $auth_user_id = $auth_user->id;
+        $time = Carbon::now();
+        
         $this->validate($request, [
             'title' => 'required',
             'body' => 'required',
@@ -124,16 +139,20 @@ class PostsController extends Controller
         ]);
         // Handle File Upload
         if($request->hasFile('cover_image')){
-            // Get filename with the extension
-            $filenameWithExt = $request->file('cover_image')->getClientOriginalName();
-            // Get just filename
-            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
-            // Get just ext
-            $extension = $request->file('cover_image')->getClientOriginalExtension();
-            // Filename to store
-            $fileNameToStore= $filename.'_'.time().'.'.$extension;
-            // Upload Image
-            $path = $request->file('cover_image')->storeAs('public/cover_images', $fileNameToStore);
+
+            $cover_image = $request->file('cover_image');
+            $filename = 'production' . '-' . time() . '.' . $cover_image->getClientOriginalExtension();
+
+            $path = $request->file('cover_image')
+                ->storeAs(
+                    'public/'
+                    // . Hash::make($auth_user->id).'/'            // User Folder Dir
+                    . $auth_user->id .'/'            // User Folder Dir
+                    . $time->format('Y/m')                    // Folder Date
+                    , $filename                                 // New Name
+                );
+
+
         }
        
         //Update Post
@@ -142,7 +161,7 @@ class PostsController extends Controller
         $post->body = $request->input('body');
         if($request->hasFile('cover_image'))
         {
-            $post->cover_image = $fileNameToStore;
+            $post->cover_image = $path;
         }
         $post->save();
 
