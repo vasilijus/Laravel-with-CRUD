@@ -49,7 +49,7 @@ cp .env.example .env
 		],
 	],
 ```
-### Storage ( must )
+### Storage ( To display all the blog images )
 ```
  ln -s 
  /path/Laravel-with-CRUD/storage/app/public 
