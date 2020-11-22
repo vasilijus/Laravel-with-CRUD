@@ -11,6 +11,8 @@ Laravel Framework 5.4.36
 
 ### composer install
 
+### npm install ( mainly for webpack )
+
 
 ### env 
 
@@ -50,6 +52,12 @@ cp .env.example .env
 	],
 ```
 ### Storage ( To display all the blog images )
+
+add to .env ( used in the)
+```
+MIX_FILES_UPLOAD="public/"
+```
+
 ```
  ln -s 
  /path/Laravel-with-CRUD/storage/app/public 
