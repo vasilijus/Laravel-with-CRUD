@@ -48,7 +48,6 @@ class PostsController extends Controller
     {
         //
         $auth_user = auth()->user();
-        $auth_user_id = $auth_user->id;
         $time = Carbon::now();
 
         $this->validate($request, [
@@ -58,30 +57,32 @@ class PostsController extends Controller
         ]);
         
         // Handle File Upload
-        if($request->hasFile('cover_image')){
+        if( $request->hasFile('cover_image') ){
 
-            $cover_image = $request->file('cover_image');
-            $filename = 'production' . '-' . time() . '.' . $cover_image->getClientOriginalExtension();
+            $allowedExtensions = ['jpg', 'jpeg', 'png', 'bmp'];
 
+            $cover_image    = $request->file('cover_image');
+            $filename       = $cover_image->getClientOriginalName();
+            $extension      = $cover_image->getClientOriginalExtension();
+
+            // . Hash::make($auth_user->id).'/'            // User Folder Dir
             $path = $request->file('cover_image')
                 ->storeAs(
-                    'public/'
-                    // . Hash::make($auth_user->id).'/'            // User Folder Dir
-                    . $auth_user->id .'/'            // User Folder Dir
-                    . $time->format('Y/m')                    // Folder Date
-                    , $filename                                 // New Name
+                    env("MIX_FILES_UPLOAD")
+                    . $auth_user->id .'/'                       // User Folder Dir
+                    . $time->format('Y/m')                      // Folder Date
+                    , $extension.'_'.time().$filename               // New Name
                 );
 
-
         } else {
-            $fileNameToStore = 'noimage.jpg';
+            $path = 'noimage.jpg';
         }
 
         //Create Post
         $post = new Post;
         $post->title = $request->input('title');
         $post->body = $request->input('body');
-        $post->user_id = $auth_user_id;
+        $post->user_id = $auth_user->id;
         $post->cover_image = $path;
         $post->save();
 
@@ -129,7 +130,6 @@ class PostsController extends Controller
     {
         //
         $auth_user = auth()->user();
-        $auth_user_id = $auth_user->id;
         $time = Carbon::now();
         
         $this->validate($request, [
@@ -138,21 +138,18 @@ class PostsController extends Controller
             'cover_image' => 'image|nullable|max:1999'
         ]);
         // Handle File Upload
-        if($request->hasFile('cover_image')){
-
-            $cover_image = $request->file('cover_image');
-            $filename = 'production' . '-' . time() . '.' . $cover_image->getClientOriginalExtension();
+        if( $request->hasFile('cover_image') ){
+            $cover_image    = $request->file('cover_image');
+            $filename       = $cover_image->getClientOriginalName();
+            $extension      = $cover_image->getClientOriginalExtension();
 
             $path = $request->file('cover_image')
                 ->storeAs(
-                    'public/'
-                    // . Hash::make($auth_user->id).'/'            // User Folder Dir
-                    . $auth_user->id .'/'            // User Folder Dir
-                    . $time->format('Y/m')                    // Folder Date
-                    , $filename                                 // New Name
+                    env("MIX_FILES_UPLOAD")
+                    . $auth_user->id .'/'                       // User Folder Dir
+                    . $time->format('Y/m')                      // Folder Date
+                    , time().$extension               // New Name
                 );
-
-
         }
        
         //Update Post
