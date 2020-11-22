@@ -13,9 +13,12 @@
                 </div>
         @else
                 <div class="jumbotron text-center">
-                        <p>Hello {{ Auth::user()->name }}</p>
-                        <p><a class="btn btn-primary" href="{{ route('login') }}">Create Post</a>
-                        <a class="btn btn-primary" href="{{ route('register') }}">Your Timeline</a></p>
+                        <h3>Hello {{ Auth::user()->name }}</h3>
+                        <br>
+                        <p>
+                                <a class="btn btn-primary" href="/posts/create">Create Post</a>
+                                <a class="btn btn-primary" href="/posts">Your Timeline</a>
+                        </p>
                 </div>
         @endif
         
